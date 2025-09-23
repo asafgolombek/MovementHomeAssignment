@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovmentHomeAssignment", "MovmentHomeAssignment\MovmentHomeAssignment.csproj", "{FAB876D0-6684-4DD8-A1B5-990C36B7B3F7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovementHomeAssignment", "MovementHomeAssignment\MovementHomeAssignment.csproj", "{FAB876D0-6684-4DD8-A1B5-990C36B7B3F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
