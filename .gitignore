@@ -1,0 +1,38 @@
+## General
+.DS_Store
+*.sln.ide
+.vs/
+.idea/
+*.suo
+*.user
+*.userprefs
+*.vssscc
+*.bak
+*.scc
+## .NET and Visual Studio
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+*.pdb
+*.orig
+*.dll
+*.exe
+*.log
+*.zip
+*.nupkg
+## Packages
+packages/
+node_modules/
+## Test Results
+TestResults/
+## Resharper
+*.resharper
+*.resharper.user
+_ReSharper.*/
+## Jetbrains Rider
+.idea/
+## Vsix
+.vsix/
+## Temporary files
+temp/

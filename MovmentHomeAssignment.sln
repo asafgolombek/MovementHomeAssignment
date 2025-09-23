@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovmentHomeAssignment", "MovmentHomeAssignment\MovmentHomeAssignment.csproj", "{FAB876D0-6684-4DD8-A1B5-990C36B7B3F7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FAB876D0-6684-4DD8-A1B5-990C36B7B3F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAB876D0-6684-4DD8-A1B5-990C36B7B3F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAB876D0-6684-4DD8-A1B5-990C36B7B3F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAB876D0-6684-4DD8-A1B5-990C36B7B3F7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

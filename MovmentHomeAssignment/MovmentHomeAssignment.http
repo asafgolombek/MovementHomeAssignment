@@ -1,0 +1,39 @@
+# This variable holds the base URL for your running application.
+# Rider will often detect this automatically, but you can change the port if needed.
+@MovmentHomeAssignment_HostAddress = http://localhost:5045
+
+###
+
+# 1. CREATE a new data item
+# This request sends a POST to the /data endpoint.
+# The line below the request captures the 'id' from the response body
+# and saves it into a variable named 'id' for the next requests to use.
+# @name create_request
+POST {{MovmentHomeAssignment_HostAddress}}/data
+Content-Type: application/json
+
+{
+  "content": "This is my first piece of data created at {{%datetime%}}"
+}
+
+> {%
+    client.global.set("id", response.body.id);
+%}
+
+###
+
+# 2. GET the data item that was just created
+# This request uses the 'id' variable that was captured from the POST request above.
+GET {{MovmentHomeAssignment_HostAddress}}/data/{{id}}
+Accept: application/json
+
+###
+
+# 3. UPDATE the existing data item
+# This request also uses the 'id' variable to target the correct item.
+PUT {{MovmentHomeAssignment_HostAddress}}/data/{{id}}
+Content-Type: application/json
+
+{
+  "content": "This is the updated content."
+}
