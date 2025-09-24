@@ -17,7 +17,6 @@ public class FileDataSource : IDataSource
 
     public async Task<Data?> GetAsync(string id)
     {
-        // Clean up expired files first
         CleanupExpiredFiles();
 
         var file = Directory.GetFiles(_storagePath, $"data_{id}_*.json").FirstOrDefault();
@@ -29,17 +28,20 @@ public class FileDataSource : IDataSource
 
     public async Task SetAsync(Data data)
     {
-        // Clean up any old files for this ID before creating a new one
+        CleanOldFilesForId(data);
+        var expiration = DateTimeOffset.UtcNow.AddMinutes(30).ToUnixTimeSeconds();
+        var filePath = Path.Combine(_storagePath, $"data_{data.Id}_{expiration}.json");
+        await File.WriteAllTextAsync(filePath, JsonSerializer.Serialize(data));
+        _logger.LogInformation("Set data with ID {Id} in file storage.", data.Id);
+    }
+
+    private void CleanOldFilesForId(Data data)
+    {
         var oldFiles = Directory.GetFiles(_storagePath, $"data_{data.Id}_*.json");
         foreach(var oldFile in oldFiles)
         {
             File.Delete(oldFile);
         }
-        
-        var expiration = DateTimeOffset.UtcNow.AddMinutes(30).ToUnixTimeSeconds();
-        var filePath = Path.Combine(_storagePath, $"data_{data.Id}_{expiration}.json");
-        await File.WriteAllTextAsync(filePath, JsonSerializer.Serialize(data));
-        _logger.LogInformation("Set data with ID {Id} in file storage.", data.Id);
     }
 
     private void CleanupExpiredFiles()

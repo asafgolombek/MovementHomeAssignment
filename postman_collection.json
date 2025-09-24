@@ -6,99 +6,157 @@
 	},
 	"item": [
 		{
-			"name": "1. Create Data (POST)",
-			"event": [
+			"name": "--- Automated Workflow ---",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"// This script runs after the request is complete.",
-							"// It parses the JSON response and grabs the 'id' field.",
-							"var jsonData = pm.response.json();",
-							"",
-							"// It then saves this ID into a collection variable named 'dataId'.",
-							"// The other requests in this collection can then use {{dataId}}.",
-							"pm.collectionVariables.set(\"dataId\", jsonData.id);",
-							"",
-							"console.log(\"Saved new data ID: \" + jsonData.id);"
+					"name": "1. Create Data (POST)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// This script runs after the request is complete.",
+									"// It parses the JSON response and grabs the 'id' field.",
+									"var jsonData = pm.response.json();",
+									"",
+									"// It then saves this ID into a collection variable named 'dataId'.",
+									"// The other requests in this collection can then use {{dataId}}.",
+									"pm.collectionVariables.set(\"dataId\", jsonData.id);",
+									"",
+									"console.log(\"Saved new data ID: \" + jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
 						],
-						"type": "text/javascript"
-					}
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"content\": \"This is new data created from Postman at {{$isoTimestamp}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/data",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"data"
+							]
+						},
+						"description": "Creates a new data item and saves its ID to a collection variable for the next steps."
+					},
+					"response": []
+				},
+				{
+					"name": "2. Get Data by ID (GET)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/data/{{dataId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"data",
+								"{{dataId}}"
+							]
+						},
+						"description": "Retrieves the data item that was just created using the ID saved from the POST request."
+					},
+					"response": []
+				},
+				{
+					"name": "3. Update Data (PUT)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"content\": \"This content has been updated from Postman.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/data/{{dataId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"data",
+								"{{dataId}}"
+							]
+						},
+						"description": "Updates the data item that was just created using the ID saved from the POST request."
+					},
+					"response": []
 				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"content\": \"This is new data created from Postman at {{$isoTimestamp}}\"\n}"
-				},
-				"url": {
-					"raw": "{{baseUrl}}/data",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"data"
-					]
-				},
-				"description": "Creates a new data item and saves its ID to a collection variable for the next steps."
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "2. Get Data by ID (GET)",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/data/{{dataId}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"data",
-						"{{dataId}}"
-					]
+			"name": "--- Manual Workflow ---",
+			"item": [
+				{
+					"name": "Get Data by Manual ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/data/{{manualDataId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"data",
+								"{{manualDataId}}"
+							]
+						},
+						"description": "Retrieves a data item using the ID you manually paste into the 'manualDataId' collection variable."
+					},
+					"response": []
 				},
-				"description": "Retrieves the data item that was just created using the ID saved from the POST request."
-			},
-			"response": []
-		},
-		{
-			"name": "3. Update Data (PUT)",
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"content\": \"This content has been updated from Postman.\"\n}"
-				},
-				"url": {
-					"raw": "{{baseUrl}}/data/{{dataId}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"data",
-						"{{dataId}}"
-					]
-				},
-				"description": "Updates the data item that was just created using the ID saved from the POST request."
-			},
-			"response": []
+				{
+					"name": "Update Data by Manual ID",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"content\": \"This content was manually updated from Postman.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/data/{{manualDataId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"data",
+								"{{manualDataId}}"
+							]
+						},
+						"description": "Updates a data item using the ID you manually paste into the 'manualDataId' collection variable."
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"variable": [
@@ -112,7 +170,13 @@
 			"key": "dataId",
 			"value": "",
 			"type": "string",
-			"description": "This variable will be automatically populated with the ID from the Create Data request."
+			"description": "This variable will be AUTOMATICALLY populated with the ID from the Create Data request."
+		},
+		{
+			"key": "manualDataId",
+			"value": "paste-an-id-here",
+			"type": "string",
+			"description": "MANUALLY paste an ID here to test the 'Get/Update by Manual ID' requests."
 		}
 	]
 }
