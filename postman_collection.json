@@ -1,0 +1,119 @@
+{
+	"info": {
+		"_postman_id": "a1b2c3d4-e5f6-7890-1234-abcdef123456",
+		"name": "Multi-Layered Data API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Create Data (POST)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// This script runs after the request is complete.",
+							"// It parses the JSON response and grabs the 'id' field.",
+							"var jsonData = pm.response.json();",
+							"",
+							"// It then saves this ID into a collection variable named 'dataId'.",
+							"// The other requests in this collection can then use {{dataId}}.",
+							"pm.collectionVariables.set(\"dataId\", jsonData.id);",
+							"",
+							"console.log(\"Saved new data ID: \" + jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"content\": \"This is new data created from Postman at {{$isoTimestamp}}\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/data",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"data"
+					]
+				},
+				"description": "Creates a new data item and saves its ID to a collection variable for the next steps."
+			},
+			"response": []
+		},
+		{
+			"name": "2. Get Data by ID (GET)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/data/{{dataId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"data",
+						"{{dataId}}"
+					]
+				},
+				"description": "Retrieves the data item that was just created using the ID saved from the POST request."
+			},
+			"response": []
+		},
+		{
+			"name": "3. Update Data (PUT)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"content\": \"This content has been updated from Postman.\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/data/{{dataId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"data",
+						"{{dataId}}"
+					]
+				},
+				"description": "Updates the data item that was just created using the ID saved from the POST request."
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5045",
+			"type": "string",
+			"description": "The base URL of your locally running API. Change the port if necessary."
+		},
+		{
+			"key": "dataId",
+			"value": "",
+			"type": "string",
+			"description": "This variable will be automatically populated with the ID from the Create Data request."
+		}
+	]
+}
+
